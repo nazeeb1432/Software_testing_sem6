@@ -1,4 +1,3 @@
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -86,3 +85,81 @@ public class AuthenticationManagerTest {
         verify(hashLibrary).verifyPassword(wrongPassword, user.getPassword());
     }
 }
+
+
+//@ExtendWith(MockitoExtension.class)
+//public class AuthenticationManagerTest {
+//
+//    @Mock
+//    private UserRepository userRepository;
+//
+//    @Mock
+//    private HashLibrary hashLibrary;
+//
+//    @InjectMocks
+//    private AuthenticationManager authenticationManager;
+//
+//    // Test variables
+//    private String email;
+//    private String password;
+//    private String nonExistentEmail;
+//    private String nonExistentPassword;
+//    private String wrongPassword;
+//    private User user;
+//
+//    @BeforeEach
+//    void setup() {
+//        // Initialize test variables
+//        email = "test@example.com";
+//        password = "password123";
+//        nonExistentEmail = "nonexistent@example.com";
+//        nonExistentPassword = "nonexistentPass";
+//        wrongPassword = "wrongPassword";
+//        user = new User(email, password);
+//
+//        // Default stubbing (for success case)
+//        when(userRepository.findByEmail(email)).thenReturn(user);
+//        when(hashLibrary.verifyPassword(password, user.getPassword())).thenReturn(true);
+//    }
+//
+//    @Test
+//    void testLogin_Success() {
+//        // Act
+//        User result = authenticationManager.login(email, password);
+//
+//        // Assert
+//        assertNotNull(result);
+//        assertEquals(email, result.getEmail());
+//        assertEquals(password, result.getPassword());
+//        verify(userRepository).findByEmail(email);
+//        verify(hashLibrary).verifyPassword(password, user.getPassword());
+//    }
+//
+//    @Test
+//    void testLogin_UserNotFound_ThrowsException() {
+//        // Arrange: Override default stubbing
+//        when(userRepository.findByEmail(nonExistentEmail)).thenThrow(new RuntimeException("User not found"));
+//
+//        // Act & Assert
+//        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+//            authenticationManager.login(nonExistentEmail, nonExistentPassword);
+//        });
+//        assertEquals("User not found", exception.getMessage());
+//        verify(userRepository).findByEmail(nonExistentEmail);
+//        verifyNoInteractions(hashLibrary);
+//    }
+//
+//    @Test
+//    void testLogin_InvalidPassword_ThrowsException() {
+//        // Arrange: Override default stubbing for verifyPassword
+//        when(hashLibrary.verifyPassword(wrongPassword, user.getPassword())).thenReturn(false);
+//
+//        // Act & Assert
+//        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+//            authenticationManager.login(email, wrongPassword);
+//        });
+//        assertEquals("Invalid password", exception.getMessage());
+//        verify(userRepository).findByEmail(email);
+//        verify(hashLibrary).verifyPassword(wrongPassword, user.getPassword());
+//    }
+//}
